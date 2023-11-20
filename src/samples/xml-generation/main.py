@@ -6,7 +6,7 @@ from xml_save import Xml_Save
 
 if __name__ == "__main__":
     
-    file_path = "C:/Users/crist/Downloads/IS_2024-master/IS_2024-master/docker/volumes/data/all_players.csv"
+    file_path = "../../../docker/volumes/data/all_players.csv"
     
     # Verifique se o arquivo existe antes de criar o conversor
     if not os.path.exists(file_path):
@@ -18,7 +18,7 @@ if __name__ == "__main__":
         xml_str = converter.to_xml_str()
 
         # Configurações para salvar o arquivo XML
-        save_path = r'C:\Users\crist\Downloads'
+        save_path = r'../../../docker/volumes/data'
         file_name = 'csvtoxml.xml'
 
         # Criar uma instância do XMLImporter e salvar o XML no arquivo
