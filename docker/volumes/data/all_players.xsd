@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Football" type="FootballType"/>
+  <xs:complexType name="PlayerType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="age" use="optional"/>
+        <xs:attribute type="xs:string" name="country_ref" use="optional"/>
+        <xs:attribute type="xs:string" name="club" use="optional"/>
+        <xs:attribute type="xs:string" name="position" use="optional"/>
+        <xs:attribute type="xs:string" name="overall" use="optional"/>
+        <xs:attribute type="xs:string" name="pace" use="optional"/>
+        <xs:attribute type="xs:string" name="shooting" use="optional"/>
+        <xs:attribute type="xs:string" name="passing" use="optional"/>
+        <xs:attribute type="xs:string" name="dribbling" use="optional"/>
+        <xs:attribute type="xs:string" name="defending" use="optional"/>
+        <xs:attribute type="xs:string" name="physicality" use="optional"/>
+        <xs:attribute type="xs:string" name="acceleration" use="optional"/>
+        <xs:attribute type="xs:string" name="sprint" use="optional"/>
+        <xs:attribute type="xs:string" name="positioning" use="optional"/>
+        <xs:attribute type="xs:string" name="finishing" use="optional"/>
+        <xs:attribute type="xs:string" name="shot" use="optional"/>
+        <xs:attribute type="xs:string" name="long" use="optional"/>
+        <xs:attribute type="xs:string" name="volleys" use="optional"/>
+        <xs:attribute type="xs:string" name="penalties" use="optional"/>
+        <xs:attribute type="xs:string" name="vision" use="optional"/>
+        <xs:attribute type="xs:string" name="crossing" use="optional"/>
+        <xs:attribute type="xs:string" name="free" use="optional"/>
+        <xs:attribute type="xs:string" name="curve" use="optional"/>
+        <xs:attribute type="xs:string" name="agility" use="optional"/>
+        <xs:attribute type="xs:string" name="balance" use="optional"/>
+        <xs:attribute type="xs:string" name="reactions" use="optional"/>
+        <xs:attribute type="xs:string" name="ball" use="optional"/>
+        <xs:attribute type="xs:string" name="composure" use="optional"/>
+        <xs:attribute type="xs:string" name="interceptions" use="optional"/>
+        <xs:attribute type="xs:string" name="heading" use="optional"/>
+        <xs:attribute type="xs:string" name="defense" use="optional"/>
+        <xs:attribute type="xs:string" name="standing" use="optional"/>
+        <xs:attribute type="xs:string" name="sliding" use="optional"/>
+        <xs:attribute type="xs:string" name="jumping" use="optional"/>
+        <xs:attribute type="xs:string" name="stamina" use="optional"/>
+        <xs:attribute type="xs:string" name="strength" use="optional"/>
+        <xs:attribute type="xs:string" name="aggression" use="optional"/>
+        <xs:attribute type="xs:string" name="att_work_rate" use="optional"/>
+        <xs:attribute type="xs:string" name="def_work_rate" use="optional"/>
+        <xs:attribute type="xs:string" name="preferred_foot" use="optional"/>
+        <xs:attribute type="xs:string" name="weak_foot" use="optional"/>
+        <xs:attribute type="xs:string" name="skill_moves" use="optional"/>
+        <xs:attribute type="xs:string" name="url" use="optional"/>
+        <xs:attribute type="xs:string" name="gender" use="optional"/>
+        <xs:attribute type="xs:string" name="gk" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="PlayersType">
+    <xs:sequence>
+      <xs:element type="PlayerType" name="Player" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CountryType">
+    <xs:sequence>
+      <xs:element type="PlayersType" name="Players"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:string" name="Coordenadas" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="CountriesType">
+    <xs:sequence>
+      <xs:element type="CountryType" name="Country" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ClubType">
+    <xs:sequence>
+      <xs:element type="CountriesType" name="Countries"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="ClubsType">
+    <xs:sequence>
+      <xs:element type="ClubType" name="Club" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FootballType">
+    <xs:sequence>
+      <xs:element type="ClubsType" name="Clubs"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
