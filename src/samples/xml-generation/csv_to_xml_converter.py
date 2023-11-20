@@ -1,4 +1,4 @@
-import csv
+import csv, os
 import xml.dom.minidom as md
 import xml.etree.ElementTree as ET
 
@@ -10,8 +10,11 @@ from entities.country import Country
 
 class CSVtoXMLConverter:
 
-    def __init__(self, path):
+    def __init__(self, path, xml_content, save_path, file_name):
         self._reader = CSVReader(path)
+        self.xml_content = xml_content
+        self.save_path = save_path
+        self.file_name = file_name
 
     def to_xml(self):
         # read countries
@@ -117,3 +120,10 @@ class CSVtoXMLConverter:
         xml_str = ET.tostring(self.to_xml(), encoding='utf8', method='xml').decode()
         dom = md.parseString(xml_str)
         return dom.toprettyxml()
+
+
+    def save_to_file(self):
+        file_path = os.path.join(self.save_path, self.file_name)
+        with open(file_path, 'w', encoding='utf-8') as xml_file:
+            xml_file.write(self.xml_content)
+        return file_path

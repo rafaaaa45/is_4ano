@@ -4,6 +4,11 @@ from xmlrpc.server import SimpleXMLRPCRequestHandler
 
 from functions.string_length import string_length
 from functions.string_reverse import string_reverse
+from functions.xml_validator import validator
+from functions.importer import importFile
+from functions.query1 import query1
+from functions.query2 import query2
+from functions.query3 import query3
 
 
 class RequestHandler(SimpleXMLRPCRequestHandler):
@@ -32,6 +37,11 @@ with SimpleXMLRPCServer(('0.0.0.0', 9000), requestHandler=RequestHandler) as ser
     # register both functions
     server.register_function(string_reverse)
     server.register_function(string_length)
+    server.register_function(validator)
+    server.register_function(importFile)
+    server.register_function(query1)
+    server.register_function(query2)
+    server.register_function(query3)
 
     # start the server
     print("Starting the RPC Server...")

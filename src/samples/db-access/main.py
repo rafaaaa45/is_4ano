@@ -11,11 +11,15 @@ try:
                                   database="is")
 
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM teachers")
 
-    print("Teachers list:")
-    for teacher in cursor:
-        print(f" > {teacher[0]}, from {teacher[1]}")
+    file_path = '../../../docker/volumes/data/csvtoxml.xml'
+    xml_name = 'csvtoxml.xml'
+
+    with open(file_path, encoding='utf-8') as file:
+        data = file.read()
+
+        cursor.execute("INSERT INTO imported_documents(file_name,xml) VALUES(%s,%s)", (xml_name, data))
+        connection.commit()
 
 except (Exception, psycopg2.Error) as error:
     print("Failed to fetch data", error)

@@ -19,13 +19,15 @@ if __name__ == "__main__":
 
         # Configurações para salvar o arquivo XML
         save_path = r'../../../docker/volumes/data'
-        file_name = 'csvtoxml.xml'
+        file_name = 'all_players.xml'
 
         # Criar uma instância do XMLImporter e salvar o XML no arquivo
         xml_importer = Xml_Save(xml_str, save_path, file_name)
         file_path_xml = xml_importer.save_to_file()
 
         print(f'O XML foi salvo em: {file_path_xml}')
+
+
 
         profiler = cProfile.Profile()
         profiler.enable()
