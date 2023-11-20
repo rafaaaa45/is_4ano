@@ -113,19 +113,19 @@ class CSVtoXMLConverter:
         """
         for club in clubs.values():
             club_el = ET.SubElement(clubs_el, "Club", name=club._name)
-            
+            countries_el = ET.SubElement(club_el, "Countries") 
             for country, players in club.players_by_country.items():
-                countries_el = ET.SubElement(club_el, "Country", name=country.get_name(), Coordenadas=f"{country._lat}, {country._lon}")
-                players_el = ET.SubElement(countries_el, "Players")
+                country_el = ET.SubElement(countries_el, "Country", name=country.get_name(), Coordenadas=f"{country._lat}, {country._lon}")
+                players_el = ET.SubElement(country_el, "Players")
                 for player in players:
                     players_el.append(player.to_xml())
        
-        
+        """
         countries_el = ET.Element("Countries")
         for country in countries.values():
             countries_el.append(country.to_xml())
 
-        
+        """
         root_el.append(clubs_el)
        
         
