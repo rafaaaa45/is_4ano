@@ -1,14 +1,21 @@
 import csv
 import xml.dom.minidom as md
 import xml.etree.ElementTree as ET
+import requests
+import json 
+import urllib.parse
 
 from csv_reader import CSVReader
 from entities.nation import Nation
 from entities.club import Club
 from entities.player import Player
+from entities.country import Country
 
 
 class CSVtoXMLConverter:
+
+
+   
 
     def __init__(self, path):
         self._reader = CSVReader(path)
@@ -29,7 +36,14 @@ class CSVtoXMLConverter:
         #read players
         def after_creating_player(player, row):
             # add the player to the appropriate team
-            clubs[row["Club"]].add_player(player)
+            #clubs[row["Club"]].add_player(player)
+            club = clubs[row["Club"]]
+            country = countries[row["Nation"]]
+
+            if country not in club.players_by_country:
+                club.players_by_country[country] = []
+
+            club.players_by_country[country].append(player)
 
         self._reader.read_entities(
             attr="Name",
@@ -85,19 +99,38 @@ class CSVtoXMLConverter:
         )
 
         # generate the final xml
+        for country in countries.values():
+            coordinates = country.get_geoloc(country.get_name())
+            country.set_geoloc(coordinates[0], coordinates[1])
+            
+            
         root_el = ET.Element("Football")
 
         clubs_el = ET.Element("Clubs")
+        """
         for club in clubs.values():
             clubs_el.append(club.to_xml())
-
+        """
+        for club in clubs.values():
+            club_el = ET.SubElement(clubs_el, "Club", name=club._name)
+            countries_el = ET.SubElement(club_el, "Countries") 
+            for country, players in club.players_by_country.items():
+                country_el = ET.SubElement(countries_el, "Country", name=country.get_name(), Coordenadas=f"{country._lat}, {country._lon}")
+                players_el = ET.SubElement(country_el, "Players")
+                for player in players:
+                    players_el.append(player.to_xml())
+       
+        """
         countries_el = ET.Element("Countries")
         for country in countries.values():
             countries_el.append(country.to_xml())
 
+        """
         root_el.append(clubs_el)
-        root_el.append(countries_el)
-
+       
+        
+      
+      
         return root_el
 
     def to_xml_str(self):
