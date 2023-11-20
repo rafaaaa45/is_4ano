@@ -19,28 +19,31 @@ class Nation:
         self._lon = lon
 
     def get_geoloc(self, country):
-        location = country
-        # Remova a barra do final da URL
-        url = 'https://nominatim.openstreetmap.org/search?q=' + urllib.parse.quote(location) + '&format=json'
+        if country.lower() == 'korea dpr':
+            return [0, 0]  # Retorna coordenadas padrão para Korea
+        else : 
+            location = country
+            # Remova a barra do final da URL
+            url = 'https://nominatim.openstreetmap.org/search?q=' + urllib.parse.quote(location) + '&format=json'
 
-        try:
-            response = requests.get(url)
-            response.raise_for_status()  # Verifica se a resposta da solicitação foi bem-sucedida
+            try:
+                response = requests.get(url)
+                response.raise_for_status()  # Verifica se a resposta da solicitação foi bem-sucedida
 
-            geolocation = response.json()
+                geolocation = response.json()
 
-            if geolocation:
-                return [
-                    geolocation[0]['lat'],
-                    geolocation[0]['lon']
-                ]
-            else:
-                print(f"Geolocalização não encontrada para {country}")
+                if geolocation:
+                    return [
+                        geolocation[0]['lat'],
+                        geolocation[0]['lon']
+                    ]
+                else:
+                    print(f"Geolocalização não encontrada para {country}")
+                    return [0, 0]  # Retornar coordenadas padrão ou outra abordagem que fizer sentido
+
+            except requests.exceptions.RequestException as e:
+                print(f"Erro na solicitação de geolocalização: {e}")
                 return [0, 0]  # Retornar coordenadas padrão ou outra abordagem que fizer sentido
-
-        except requests.exceptions.RequestException as e:
-            print(f"Erro na solicitação de geolocalização: {e}")
-            return [0, 0]  # Retornar coordenadas padrão ou outra abordagem que fizer sentido
 
     def to_xml(self):
         el = ET.Element("Nation")
@@ -52,7 +55,7 @@ class Nation:
 
     def get_name(self):
         return self._name
-    
+
     def get_id(self):
         return self._id
 
